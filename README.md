@@ -7,27 +7,29 @@ It uses a simple singleton based repository to store transaction-objects as well
 
 Add new transaction
 -------------------
-PUT /transactionservice/transaction/{id}
-Body: { "amount": double, "type": string, "parent_id": long }
+PUT /transactionservice/transaction/{id}<br>
+Body: { "amount": double, "type": string, "parent_id": long }<br>
 
-transaction_id is a long specifying a new transaction
-amount is a double specifying the amount
-type is a string specifying a type of the transaction.
-parent_id is an optional long that may specify the parent transaction of this transaction.
+<ul>
+<li>transaction_id is a long specifying a new transaction</li>
+<li>amount is a double specifying the amount</li>
+<li>type is a string specifying a type of the transaction.</li>
+<li>parent_id is an optional long that may specify the parent transaction of this transaction.</li>
+</ul>
 
 Get Transaction by ID
 ---------------------
-GET /transactionservice/transaction/{id}
-Returns: { "amount": double, "type": string, "parent_id": long }
+GET /transactionservice/transaction/{id}<br>
+Returns: { "amount": double, "type": string, "parent_id": long }<br>
 
 Get Transaction-IDs by type 
 ---------------------------
-GET /transactionservice/types/{type}
-Returns: [ long, long, .... ]
+GET /transactionservice/types/{type}<br>
+Returns: [ long, long, .... ]<br>
 A json list of all transaction ids that share the same type.
 
 Get Transaction Sums
 --------------------
-GET /transactionservice/sum/{id}
-Returns: { "sum", double }
+GET /transactionservice/sum/{id}<br>
+Returns: { "sum", double }<br>
 Get the Sum of all transaction that are transitively linked by their parent_id to transaction_id
