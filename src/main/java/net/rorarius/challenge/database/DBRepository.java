@@ -68,6 +68,15 @@ public class DBRepository
     }
 
     /**
+     * Returns a transaction from the Repository
+     * @param transactionId
+     * @return true/false
+     */
+    public Transaction getTransactionById(Long transactionId) {
+        return transactionListById.get(transactionId);
+    }
+
+    /**
      * Checks if a Transaction exists in the Repository
      * @param transactionId
      * @return true/false

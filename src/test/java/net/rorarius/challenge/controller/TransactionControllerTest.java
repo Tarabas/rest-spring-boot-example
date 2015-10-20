@@ -38,6 +38,7 @@ public class TransactionControllerTest
 {
     private final static String PUT_URL="http://localhost:7777/transactionservice/transaction/{id}";
     private final static String GET_BY_TYPE_URL="http://localhost:7777/transactionservice/types/{type}";
+    private final static String GET_BY_ID_URL="http://localhost:7777/transactionservice/transaction/{id}";
     private final static String GET_SUM_URL="http://localhost:7777/transactionservice/sum/{id}";
 
     private final static StatusResponse OK_RESPONSE = new StatusResponse(StatusCode.OK);
@@ -79,6 +80,14 @@ public class TransactionControllerTest
         return transaction.getBody();
     }
 
+    private Transaction getTransactionById(Long transactionId) throws JsonProcessingException {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        ResponseEntity<Transaction> transaction = restTemplate.getForEntity(GET_BY_ID_URL, Transaction.class, transactionId);
+
+        return transaction.getBody();
+    }
 
     private Double getTransactionSum(Long transactionId) throws JsonProcessingException, IOException {
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -259,5 +268,23 @@ public class TransactionControllerTest
 
         StatusResponse response2 = addTransaction(new Transaction(10L, 10D, "cars", 10L));
         assertThat(response2, equalTo(ERROR_RESPONSE));
+    }
+
+    @Test
+    public void testAddTransactionGetTransaction() throws Exception {
+        StatusResponse response = addTransaction(new Transaction(10L, 10D, "cars", null));
+        assertThat(response, equalTo(OK_RESPONSE));
+
+        Transaction trx = getTransactionById(10L);
+        assertThat(trx, notNullValue());
+        assertThat(trx.getAmount(), equalTo(10D));
+        assertThat(trx.getType(), equalTo("cars"));
+        assertThat(trx.getParentId(), nullValue());
+    }
+
+    @Test
+    public void testGetNonExistentTransaction() throws Exception {
+        Transaction trx = getTransactionById(10L);
+        assertThat(trx, nullValue());
     }
 }

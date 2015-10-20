@@ -74,6 +74,36 @@ public class TransactionController
         }
     }
 
+
+    /**
+     * Adds a new Transaction via the PUT Command. Returns a Body, although PUT
+     * normally does not need a return body.
+     * @param transactionId the transactionId to be added
+     * @param response The HttpServletResponse for custom return codes
+     * @return StatusResponse OK or ERROR, Returns HttpCode 200, 201 or 400
+     */
+    @RequestMapping(value="/transactionservice/transaction/{transactionId}",
+            method= RequestMethod.GET,
+            produces= MediaType.APPLICATION_JSON_VALUE
+    )
+    public Transaction getTransaction(@PathVariable("transactionId") Long transactionId,
+                                         HttpServletResponse response) {
+
+        try {
+            Transaction transaction = repository.getTransactionById(transactionId);
+
+            if (transaction != null) {
+                return transaction;
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            }
+        } catch (Exception e) {
+            handleException(e);
+            return null;
+        }
+    }
+
     /**
      * Returns a List of all transactionIDs for a certain type of Transaction
      * @param type the type of transaction to query

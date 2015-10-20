@@ -232,4 +232,13 @@ public class DBRepositoryTest
         Transaction trx = new Transaction(1L, 10D, "test", 2L);
         repository.addTransaction(trx);
     }
+
+    @Test
+    public void testAddTransactionAndGet() throws TransactionIdEmptyException, TransactionInvalidException {
+        Transaction trx = new Transaction(1L, 10D, "test", null);
+        boolean success = repository.addTransaction(trx);
+
+        assertThat(success, equalTo(true));
+        assertThat(repository.getTransactionById(trx.getTransactionId()), equalTo(trx));
+    }
 }
