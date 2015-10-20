@@ -33,3 +33,8 @@ Get Transaction Sums
 GET /transactionservice/sum/{id}<br>
 Returns: { "sum", double }<br>
 Get the Sum of all transaction that are transitively linked by their parent_id to transaction_id
+
+Note:
+The defined API is a little bit insonsistent which was part of the original challenge. It would be better to keep the API more consistent and use JSON in all results and define a consistent error reporting behaviour instead of switching between a List of results and JSON. Also the use of Http-Codes is an easy way to communicate certain errors and was utilized by me when it seemed appropriate but it was not part of the original task. HttpErrorCode asserts were not implemented in the Integration tests as of yet though.
+
+There are obvious limitations to the calculation of the sums when there is a lot of recursive parent/child relationships. This was not addressed due to the examplatory nature of this Example.
