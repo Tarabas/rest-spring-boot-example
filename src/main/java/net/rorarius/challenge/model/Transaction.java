@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
+import java.beans.Transient;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"transactionId"})
 public class Transaction
 {
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("transaction_id")
     private Long transactionId;
 
     @JsonProperty("amount")
